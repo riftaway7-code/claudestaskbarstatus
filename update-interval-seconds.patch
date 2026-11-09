@@ -1,0 +1,5 @@
+--- taskbar-clock-customization.wh.cpp (v1.8)
++++ taskbar-clock-customization.wh.cpp (patched)
+@@ -1326 +1326 @@
+-        DWORD seconds = std::max(g_settings.webContentsUpdateInterval, 1) * 60;
++        DWORD seconds = std::max(g_settings.webContentsUpdateInterval, 1);
