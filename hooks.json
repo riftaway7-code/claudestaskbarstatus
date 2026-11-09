@@ -1,0 +1,37 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$d = Join-Path $env:USERPROFILE 'ClaudeTray'; $verbs = Get-Content (Join-Path $d 'verbs.json') | ConvertFrom-Json; $status = @{ state='thinking'; verb=($verbs | Get-Random); start=[DateTimeOffset]::UtcNow.ToUnixTimeSeconds() } | ConvertTo-Json -Compress; Set-Content -Path (Join-Path $d 'status.json') -Value $status -Encoding utf8"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$d = Join-Path $env:USERPROFILE 'ClaudeTray'; $status = @{ state='idle'; verb=''; start=[DateTimeOffset]::UtcNow.ToUnixTimeSeconds() } | ConvertTo-Json -Compress; Set-Content -Path (Join-Path $d 'status.json') -Value $status -Encoding utf8"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$d = Join-Path $env:USERPROFILE 'ClaudeTray'; $status = @{ state='waiting'; verb='Waiting'; start=[DateTimeOffset]::UtcNow.ToUnixTimeSeconds() } | ConvertTo-Json -Compress; Set-Content -Path (Join-Path $d 'status.json') -Value $status -Encoding utf8"
+          }
+        ]
+      }
+    ]
+  }
+}
